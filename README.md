@@ -1,171 +1,47 @@
 # my_alias_settings
 
-Ubuntu 22.04 + ROS 2 Humble 개발환경에서 사용하는 bash alias, Conda, Isaac Sim, 프롬프트 설정을 모아둔 개인 shell configuration 저장소입니다.
+Ubuntu 및 ROS 2 환경에서 반복 사용하는 Bash 명령어를 간단하게 실행하는 alias 설정 모음입니다.
 
----
+## 사용할 환경 선택
 
-## 📁 구성 파일
+| 브랜치 | Ubuntu | ROS 2 | 안내 |
+| --- | --- | --- | --- |
+| [humble](https://github.com/nayana224/my_alias_settings/tree/humble) | 22.04 LTS | Humble | [설치 및 사용법](https://github.com/nayana224/my_alias_settings/blob/humble/README.md) |
+| [jazzy](https://github.com/nayana224/my_alias_settings/tree/jazzy) | 24.04 LTS | Jazzy | [설치 및 사용법](https://github.com/nayana224/my_alias_settings/blob/jazzy/README.md) |
 
-| 파일 | 설명 |
-| --- | --- |
-| `.alias_settings.sh` | bash alias, ROS 2 Humble, colcon, Conda, 프롬프트, Isaac Sim 및 개인 도구 설정 |
+각 브랜치에는 해당 환경용 `.alias_settings.sh`와 단계별 설치 README가 있습니다.
 
----
+## 빠른 설치
 
-## ⚙️ 주요 기능
-
-### 🔄 Bash reload
-
-```bash
-sb
-```
-
-`~/.bashrc`를 다시 불러옵니다.
-
-### 🤖 ROS 2 Humble
-
-터미널에서 설정 파일을 불러올 때 `/opt/ros/humble/setup.bash`가 존재하면 자동으로 source합니다.
-
-ROS domain ID를 `7`로 설정하려면:
+자신이 사용하는 ROS 2 배포판에 맞는 브랜치를 선택하세요. 예시는 Jazzy입니다.
 
 ```bash
-ros_domain
-```
-
-ROS 2 workspace의 루트에서 `install/setup.bash`를 source하려면:
-
-```bash
-srws
-```
-
-### 🛠️ Colcon build
-
-전체 빌드:
-
-```bash
-cb
-```
-
-특정 패키지만 빌드:
-
-```bash
-cbp <package_name>
-```
-
-예시:
-
-```bash
-cbp my_robot_description
-```
-
-### 🐍 Conda
-
-기본 설치 위치를 다음 경로로 가정합니다.
-
-```text
-~/miniconda3
-```
-
-`conda.sh`가 존재하면 자동으로 source합니다.
-
-### 🖥️ Prompt
-
-현재 Conda environment와 `ROS_DOMAIN_ID`를 프롬프트에 표시합니다.
-
-예시:
-
-```text
-(isaacsim_5) (ID: 7)kitech:~/workspace$
-```
-
-Conda environment 또는 `ROS_DOMAIN_ID`가 변경되면 다음 프롬프트부터 현재 값을 반영합니다.
-
-### 🚀 Isaac Sim 5.0
-
-Isaac Sim pip environment 관련 alias:
-
-```bash
-act_isaac
-isaacsim5
-isaacsim5_vscode
-isaac_py
-```
-
-Custom Food 프로젝트 실행:
-
-```bash
-run_custom_food_isaac
-```
-
-이 함수는 다음 프로젝트 경로를 사용합니다.
-
-```text
-~/inpyo_ws/custom_food_ws_v2
-```
-
-필요하면 `isaacsim_5` Conda environment를 활성화한 뒤 다음 모듈을 실행합니다.
-
-```bash
-python -m isaac_sim.app.main
-```
-
-### 🔧 개인 도구
-
-Arena SDK 실행:
-
-```bash
-arena_lucid
-```
-
-Scepter GUI 실행:
-
-```bash
-scepter
-```
-
----
-
-## 🚀 설치 방법
-
-1. 저장소 clone
-
-```bash
-git clone https://github.com/nayana224/my_alias_settings.git ~/my_alias_settings
-```
-
-2. `~/.bashrc`에 추가
-
-```bash
-source ~/my_alias_settings/.alias_settings.sh
-```
-
-3. 적용
-
-```bash
+cd ~
+git clone -b jazzy https://github.com/nayana224/my_alias_settings.git
+touch ~/.alias_settings.sh
+cp -a ~/.alias_settings.sh ~/.alias_settings.sh.backup
+cp ~/my_alias_settings/.alias_settings.sh ~/.alias_settings.sh
+grep -qxF 'source ~/.alias_settings.sh' ~/.bashrc || echo 'source ~/.alias_settings.sh' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-정상적으로 적용되면 다음 메시지가 출력됩니다.
+Humble 환경이라면 `-b jazzy`를 `-b humble`로 변경하세요.
 
-```text
-Using the Lee In-pyo ~/.alias_settings.sh configuration.
-```
+> 기존 `~/.alias_settings.sh`가 있다면 복사 전에 반드시 백업하세요. `cp`는 기존 파일을 덮어씁니다.
 
----
+## 주요 명령어
 
-## 🧩 권장 사용 환경
+| 명령 | 설명 |
+| --- | --- |
+| `cb` | ROS 2 워크스페이스 빌드 |
+| `srws` | 현재 워크스페이스의 setup 파일 적용 |
+| `sb` | Bash 설정 다시 불러오기 |
+| `jazzy` / `humble` | 해당 ROS 2 환경 활성화 |
+| `cisaac`, `isaac` | Jazzy 브랜치에서 Isaac Sim 환경 활성화 및 실행 |
 
-- Ubuntu 22.04 LTS
-- bash
-- ROS 2 Humble
-- colcon
-- Miniconda (`~/miniconda3`)
-- Isaac Sim 5.0 pip environment (`isaacsim_5`)
+설치 후 `type cb`, `type srws`로 명령어가 등록되었는지 확인할 수 있습니다.
 
-일부 alias와 함수는 개인 프로젝트 및 도구 경로를 사용하므로 다른 시스템에서는 경로 수정이 필요할 수 있습니다.
+### 자세한 설치·갱신·제거 안내
 
----
-
-## 📝 목적
-
-이 저장소는 공개 배포용 shell framework보다는 개인 개발환경을 빠르게 복구하고 일관되게 유지하기 위한 용도로 관리합니다.
+- [ROS 2 Humble 설치 안내](https://github.com/nayana224/my_alias_settings/blob/humble/README.md)
+- [ROS 2 Jazzy 설치 안내](https://github.com/nayana224/my_alias_settings/blob/jazzy/README.md)
