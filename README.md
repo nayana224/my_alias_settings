@@ -8,7 +8,8 @@ Ubuntu 24.04 LTS / ROS 2 Jazzy 환경에서 사용하는 Bash alias 설정입니
 
 - Ubuntu 24.04 LTS, Bash, ROS 2 Jazzy 설치
 - `git` 및 ROS 2 패키지를 빌드하려면 `colcon` 설치
-- 이 설정은 기본적으로 CycloneDDS를 사용합니다. `sudo apt install ros-jazzy-rmw-cyclonedds-cpp`로 설치하세요.\n- Isaac Sim 명령은 선택 기능으로, Conda 환경 이름이 `isaacsim`이고 그 안에서 `isaacsim` 명령이 실행되어야 합니다.
+- 이 설정은 기본적으로 CycloneDDS를 사용합니다. `sudo apt install ros-jazzy-rmw-cyclonedds-cpp`로 설치하세요.
+- Isaac Sim 명령은 선택 기능으로, Conda 환경 이름이 `isaacsim`이고 그 안에서 `isaacsim` 명령이 실행되어야 합니다.
 
 ## 설치 방법
 
@@ -74,7 +75,8 @@ type jazzy
 | `cb` | `colcon build --symlink-install` |
 | `srws` | 현재 작업 디렉터리의 `install/setup.bash` 불러오기 |
 | `sb` | Bash 설정 다시 불러오기 |
-| `cisaac` | 현재 셸의 Conda `isaacsim` 환경 활성화 |\n| `isaac [옵션]` | 서브셸에서 ROS 2와 Conda를 활성화하고 Isaac Sim 실행 |
+| `cisaac` | 현재 셸의 Conda `isaacsim` 환경 활성화 |
+| `isaac [옵션]` | 서브셸에서 ROS 2와 Conda를 활성화하고 Isaac Sim 실행 |
 
 `cb`와 `srws`는 ROS 2 워크스페이스 루트에서 사용하세요. 예시:
 
