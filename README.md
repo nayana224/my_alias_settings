@@ -1,171 +1,76 @@
-# my_alias_settings
+# my_alias_settings — ROS 2 Humble
 
-Ubuntu 22.04 + ROS 2 Humble 개발환경에서 사용하는 bash alias, Conda, Isaac Sim, 프롬프트 설정을 모아둔 개인 shell configuration 저장소입니다.
+Ubuntu 22.04와 ROS 2 Humble에서 사용하는 Bash alias 설정입니다.
 
----
+[기본 안내](https://github.com/nayana224/my_alias_settings) · [Humble](https://github.com/nayana224/my_alias_settings/tree/humble) · [Jazzy](https://github.com/nayana224/my_alias_settings/tree/jazzy)
 
-## 📁 구성 파일
+## 설치
 
-| 파일 | 설명 |
-| --- | --- |
-| `.alias_settings.sh` | bash alias, ROS 2 Humble, colcon, Conda, 프롬프트, Isaac Sim 및 개인 도구 설정 |
-
----
-
-## ⚙️ 주요 기능
-
-### 🔄 Bash reload
+**1. 저장소 복제**
 
 ```bash
-sb
+cd ~
+git clone -b humble https://github.com/nayana224/my_alias_settings.git
 ```
 
-`~/.bashrc`를 다시 불러옵니다.
+이미 `~/my_alias_settings` 폴더가 있다면 해당 폴더에서 `git fetch origin` 후 `git switch humble`로 전환합니다.
 
-### 🤖 ROS 2 Humble
-
-터미널에서 설정 파일을 불러올 때 `/opt/ros/humble/setup.bash`가 존재하면 자동으로 source합니다.
-
-ROS domain ID를 `7`로 설정하려면:
+**2. 홈 디렉터리의 설정 파일 준비**
 
 ```bash
-ros_domain
+touch ~/.alias_settings.sh
 ```
 
-ROS 2 workspace의 루트에서 `install/setup.bash`를 source하려면:
+기존 설정이 있다면 복사하기 전에 백업합니다.
 
 ```bash
-srws
+cp -a ~/.alias_settings.sh ~/.alias_settings.sh.backup
+cp ~/my_alias_settings/.alias_settings.sh ~/.alias_settings.sh
 ```
 
-### 🛠️ Colcon build
+`touch`는 설치에 필수는 아닙니다. `cp`가 파일을 생성하며, 기존 내용은 덮어씁니다.
 
-전체 빌드:
+**3. Bash에 연결**
 
 ```bash
-cb
-```
-
-특정 패키지만 빌드:
-
-```bash
-cbp <package_name>
-```
-
-예시:
-
-```bash
-cbp my_robot_description
-```
-
-### 🐍 Conda
-
-기본 설치 위치를 다음 경로로 가정합니다.
-
-```text
-~/miniconda3
-```
-
-`conda.sh`가 존재하면 자동으로 source합니다.
-
-### 🖥️ Prompt
-
-현재 Conda environment와 `ROS_DOMAIN_ID`를 프롬프트에 표시합니다.
-
-예시:
-
-```text
-(isaacsim_5) (ID: 7)kitech:~/workspace$
-```
-
-Conda environment 또는 `ROS_DOMAIN_ID`가 변경되면 다음 프롬프트부터 현재 값을 반영합니다.
-
-### 🚀 Isaac Sim 5.0
-
-Isaac Sim pip environment 관련 alias:
-
-```bash
-act_isaac
-isaacsim5
-isaacsim5_vscode
-isaac_py
-```
-
-Custom Food 프로젝트 실행:
-
-```bash
-run_custom_food_isaac
-```
-
-이 함수는 다음 프로젝트 경로를 사용합니다.
-
-```text
-~/inpyo_ws/custom_food_ws_v2
-```
-
-필요하면 `isaacsim_5` Conda environment를 활성화한 뒤 다음 모듈을 실행합니다.
-
-```bash
-python -m isaac_sim.app.main
-```
-
-### 🔧 개인 도구
-
-Arena SDK 실행:
-
-```bash
-arena_lucid
-```
-
-Scepter GUI 실행:
-
-```bash
-scepter
-```
-
----
-
-## 🚀 설치 방법
-
-1. 저장소 clone
-
-```bash
-git clone https://github.com/nayana224/my_alias_settings.git ~/my_alias_settings
-```
-
-2. `~/.bashrc`에 추가
-
-```bash
-source ~/my_alias_settings/.alias_settings.sh
-```
-
-3. 적용
-
-```bash
+grep -qxF 'source ~/.alias_settings.sh' ~/.bashrc || echo 'source ~/.alias_settings.sh' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-정상적으로 적용되면 다음 메시지가 출력됩니다.
+**4. 확인**
 
-```text
-Using the Lee In-pyo ~/.alias_settings.sh configuration.
+```bash
+type cb
+type srws
+type sb
 ```
 
----
+## 사용 방법
 
-## 🧩 권장 사용 환경
+| 명령어 | 기능 |
+| --- | --- |
+| `humble` | ROS 2 Humble 환경 불러오기 |
+| `cb` | `colcon build --symlink-install` |
+| `srws` | 현재 워크스페이스의 `install/setup.bash` 불러오기 |
+| `sb` | `~/.bashrc` 다시 불러오기 |
 
-- Ubuntu 22.04 LTS
-- bash
-- ROS 2 Humble
-- colcon
-- Miniconda (`~/miniconda3`)
-- Isaac Sim 5.0 pip environment (`isaacsim_5`)
 
-일부 alias와 함수는 개인 프로젝트 및 도구 경로를 사용하므로 다른 시스템에서는 경로 수정이 필요할 수 있습니다.
+`cb`와 `srws`는 ROS 2 워크스페이스 루트에서 사용하세요.
 
----
+## 설정 수정과 갱신
 
-## 📝 목적
+사용자 설정은 `~/.alias_settings.sh`에서 수정합니다. 수정 후 `sb`를 실행하세요.
 
-이 저장소는 공개 배포용 shell framework보다는 개인 개발환경을 빠르게 복구하고 일관되게 유지하기 위한 용도로 관리합니다.
+저장소의 최신 변경사항을 반영할 때는 기존 사용자 설정을 백업하세요.
+
+```bash
+cd ~/my_alias_settings
+git pull --ff-only
+cp -a ~/.alias_settings.sh ~/.alias_settings.sh.backup
+cp .alias_settings.sh ~/.alias_settings.sh
+source ~/.bashrc
+```
+
+## 제거
+
+`~/.bashrc`에서 `source ~/.alias_settings.sh` 줄을 삭제합니다. 더 이상 필요하지 않다면 `~/.alias_settings.sh`와 복제 폴더를 삭제하세요. 새 터미널에서 적용됩니다.
